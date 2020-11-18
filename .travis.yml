@@ -27,3 +27,6 @@ notifications:
       - martaperea11@gmail.com
     on_success: always # default: change
     on_failure: always # default: always
+addons:
+  chrome: stable
+
