@@ -19,3 +19,9 @@ script:
   - coverage run --branch --source=. ./manage.py test --keepdb --with-xunit
   - coverage xml
   - python-codacy-coverage -r coverage.xml
+notifications:
+  email:
+    recipients:
+      - martaperea11@gmail.com
+    on_success: always # default: change
+    on_failure: always # default: always
