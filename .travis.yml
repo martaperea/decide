@@ -1,41 +1,34 @@
 dist: xenial
-
 services:
-  - postgresql
+- postgresql
 addons:
-  postgresql: "9.4"
+  postgresql: '9.4'
   chrome: stable
 before_script:
-  - psql -U postgres -c "create user decide password 'decide'"
-  - psql -U postgres -c "create database test_decide owner decide"
-  - psql -U postgres -c "ALTER USER decide CREATEDB"
+- psql -U postgres -c "create user decide password 'decide'"
+- psql -U postgres -c "create database test_decide owner decide"
+- psql -U postgres -c "ALTER USER decide CREATEDB"
 language: python
 python:
-  - "3.6"
+- '3.6'
 install:
-  - pip install -r requirements.txt
-  - pip install codacy-coverage
+- pip install -r requirements.txt
+- pip install codacy-coverage
 script:
-  - cd decide
-  - cp travis_local_settings.py local_settings.py
-  - coverage run --branch --source=. ./manage.py test mixnet --keepdb --with-xunit
-  - coverage xml
-  - python-codacy-coverage -r coverage.xml
+- cd decide
+- cp travis_local_settings.py local_settings.py
+- coverage run --branch --source=. ./manage.py test mixnet --keepdb --with-xunit
+- coverage xml
+- python-codacy-coverage -r coverage.xml
 deploy:
   provider: heroku
   app: egc-marperoli2-decide
   strategy: git
-  apikey: HEROKU_AUTH_TOKEN
-
+  api_key:
+    secure: TC/6z+tS8yo7Tps/AM6vBvCpJSG7i10+fghT4HUyylPS/fOs+vPC4Rtc1/holv7FmsFfFT3mS/v/eoVqvMPIFYTUkVylHT8qx0D8U0mPQkNXTp2BmO2SSn6WA3faNcJ4kzmnS8xf0wau+mWEbDewxI2SoIDyUfIyJEeRI9EQcktr982M0aykFIJe64EA9o+f5PFFCkh0PwJcX/4cjGg1vFRgNCKNU5rJinpkHwNfyUt1Rpi6wvY4QWLailYm3dWg8VhrP4EsL1pj1WlAm6NB4QpjBaF9OKhOH6+zvjPZ8yo2RTt3UUcDtIi0s0HWtvdOqIciua1Uc+ZWGHmcL7HHewVnuAGJEvGMuP2ibaKKBMKjVtSZWI5H6BYNO5Z/Foyue3BPhtx5GJ34SpyHaPUfiNEKnN50y3ae0BQD6Dk4+Wz85Xdbgoq4mk6h8SwClDiGNNUzZthiQGQdERB/DN8/ud7ztm31doh11+Xtirvzo6UyZZSpXm/5wzaEAUsI3jMESSM/7gW5VTV0u7bRK4yAuUwkoIntzaY82CzyTH1ks3ZcOIoZHTvk7VqDjvs7J8wHBpJDh4njwezUXadWraBelsCcsHbINrpsK8YGEXyj5tyfSBGAW/ij1tXDRi1+Zch1hsSUVRy+HBUifkGxc2BN3GyNKB+Oey1hTj48B3gok/M=
 notifications:
   email:
     recipients:
-      - martaperea11@gmail.com
-    on_success: always # default: change
-    on_failure: always # default: always
-deploy:
-  provider: heroku
-  app: egc-marperoli2-decide
-  strategy: git
-  api_key: $HEROKU_AUTH_TOKEN
-
+    - martaperea11@gmail.com
+    on_success: always
+    on_failure: always
