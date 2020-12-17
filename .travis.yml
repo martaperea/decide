@@ -11,16 +11,21 @@ before_script:
 language: python
 python:
   - "3.6"
-  - "2.7"
-  - "3.3"
 install:
   - pip install -r requirements.txt
   - pip install codacy-coverage
 script:
   - cd decide
-  - coverage run --branch --source=. ./manage.py test --keepdb --with-xunit
+  - cp travis_local_settings.py local_settings.py
+  - coverage run --branch --source=. ./manage.py test mixnet --keepdb --with-xunit
   - coverage xml
   - python-codacy-coverage -r coverage.xml
+deploy:
+  provider: heroku
+  app: egc-marperoli2-decide
+  strategy: git
+  apikey: HEROKU_AUTH_TOKEN
+
 notifications:
   email:
     recipients:
